@@ -4,14 +4,36 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <description>blog-rest-service</description>
+    <listener>
+        <listener-class>org.blog.backend.listener.PropertiesListener</listener-class>
+    </listener>
     <context-param>
-        <param-name>appProperties</param-name>
+        <param-name>allProperties</param-name>
         <param-value>application.properties</param-value>
     </context-param>
     
     <!-- Services Mapping -->
 	<servlet>
-		<servlet-name>WebServices</servlet-name>
+		<servlet-name>Services</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>org.blog.backend.ws</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Services</servlet-name>
+		<url-pattern>/s/*</url-pattern>
+	</servlet-mapping>
+	
+	 <!-- Services Mapping You can add other package and url mspping
+	<servlet>
+		<servlet-name>Services</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
@@ -26,6 +48,17 @@
 	<servlet-mapping>
 		<servlet-name>WebServices</servlet-name>
 		<url-pattern>/s/*</url-pattern>
+	</servlet-mapping> -->
+	
+	<!-- Initialize app, register objectify entities -->
+	<servlet>
+		<servlet-name>AppInitializer</servlet-name>
+		<servlet-class>org.blog.backend.servlet.InitServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AppInitializer</servlet-name>
+		<url-pattern>/config</url-pattern>
 	</servlet-mapping>
 	
 	<!-- Objectify Filter -->
@@ -38,6 +71,15 @@
 		<url-pattern>/s/*</url-pattern>
 	</filter-mapping>
     
-    
+	<!-- admin security constraints -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin</web-resource-name>
+            <url-pattern>/s/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
    
 </web-app>
