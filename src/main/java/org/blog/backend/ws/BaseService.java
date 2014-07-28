@@ -8,7 +8,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.blog.backend.util.PropertiesUtil;
+import org.blog.backend.controller.PropertiesController;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -58,7 +58,7 @@ public class BaseService {
 			logged ="I AMMMM LOGGEDDDDDDDDDD ";
 		} 
 		
-		return Response.ok("<b>Hello World </b>" + PropertiesUtil.getString("app.name") +" " +logged+ admin + email +login+logout + " " + response ).build();
+		return Response.ok("<b>Hello World </b>" + PropertiesController.getValue("app.name") +" " +logged+ admin + email +login+logout + " " + response ).build();
 	}
 
 	public UserService getUserService() {

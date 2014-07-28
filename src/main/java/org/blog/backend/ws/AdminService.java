@@ -10,7 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.blog.backend.util.PropertiesUtil;
+import org.blog.backend.controller.PropertiesController;
 
 
 @Path("/admin")
@@ -29,7 +29,7 @@ public class AdminService {
 	@Produces(MediaType.TEXT_HTML)
 	public Response helloWorld(@Context HttpServletRequest req){
 		
-		return Response.ok("<b>Hello World </b>" + PropertiesUtil.getString("app.name")).build();
+		return Response.ok("<b>Hello World </b>" + PropertiesController.getValue("app.name")).build();
 	}
 
 }

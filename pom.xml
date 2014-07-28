@@ -53,6 +53,8 @@
 					<noCookies>${deploy.noCookies}</noCookies>
 					<jvmFlags>
 						<jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>
+						<jvmFlag>-Xdebug</jvmFlag>
+						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
 					</jvmFlags>
 				</configuration>
 			</plugin>
@@ -89,6 +91,18 @@
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client</artifactId>
 			<version>1.17.0-rc</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-oauth2</artifactId>
+			<version>v2-rev64-1.17.0-rc</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-plus</artifactId>
+			<version>v1-rev118-1.17.0-rc</version>
 		</dependency>
 
 		<dependency>

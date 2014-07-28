@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <description>blog-rest-service</description>
+    
+    <!-- Listening for properties in web xml -->
     <listener>
         <listener-class>org.blog.backend.listener.PropertiesListener</listener-class>
     </listener>
@@ -12,7 +14,7 @@
         <param-value>application.properties</param-value>
     </context-param>
     
-    <!-- Services Mapping -->
+    <!-- Services Mapping For general Blog activities -->
 	<servlet>
 		<servlet-name>Services</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -31,13 +33,13 @@
 		<url-pattern>/s/*</url-pattern>
 	</servlet-mapping>
 	
-	 <!-- Services Mapping You can add other package and url mspping
+	 <!-- Oauth Service Mapping-->
 	<servlet>
-		<servlet-name>Services</servlet-name>
+		<servlet-name>OAuth</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>org.blog.backend.ws</param-value>
+			<param-value>org.blog.backend.oauth</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
@@ -46,9 +48,9 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>WebServices</servlet-name>
-		<url-pattern>/s/*</url-pattern>
-	</servlet-mapping> -->
+		<servlet-name>OAuth</servlet-name>
+		<url-pattern>/auth/*</url-pattern>
+	</servlet-mapping> 
 	
 	<!-- Initialize app, register objectify entities -->
 	<servlet>
@@ -70,6 +72,26 @@
 		<filter-name>ObjectifyFilter</filter-name>
 		<url-pattern>/s/*</url-pattern>
 	</filter-mapping>
+	
+	<servlet>
+		<description></description>
+		<servlet-name>OAuthservlet</servlet-name>
+		<servlet-class>org.blog.backend.servlet.OAuthservlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OAuthservlet</servlet-name>
+		<url-pattern>/OAuthservlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<servlet-name>OAuthCallBackServlet</servlet-name>
+		<servlet-class>org.blog.backend.servlet.OAuthCallBackServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OAuthCallBackServlet</servlet-name>
+		<url-pattern>/oauth2callback</url-pattern>
+	</servlet-mapping>
     
 	<!-- admin security constraints -->
     <security-constraint>
